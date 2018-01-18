@@ -26,7 +26,7 @@ type CertInformation struct {
 	Province           []string
 	Locality           []string
 	CommonName         string
-	CrtName, KeyName   string
+	CrtPath, KeyPath   string
 	IsCA               bool
 	Names              []pkix.AttributeTypeAndValue
 }
@@ -83,12 +83,12 @@ func CreateCrt(rootCa *x509.Certificate, rootKey *rsa.PrivateKey, info CertInfor
 		return err
 	}
 
-	err = write(info.CrtName, "CERTIFICATE", buf)
+	err = write(info.CrtPath, "CERTIFICATE", buf)
 	if err != nil {
 		return err
 	}
 	buf = x509.MarshalPKCS1PrivateKey(key)
-	return write(info.KeyName, "PRIVATE KEY", buf)
+	return write(info.KeyPath, "PRIVATE KEY", buf)
 }
 
 // ParseCrt 解析Crt

@@ -3,7 +3,6 @@ package crypto
 import (
 	"crypto/x509/pkix"
 	"encoding/asn1"
-	"os"
 	"testing"
 )
 
@@ -17,8 +16,8 @@ func Test_keypair(t *testing.T) {
 		Locality:           []string{"SuZhou"},
 		Province:           []string{"JiangSu"},
 		CommonName:         "192.168.205.114",
-		CrtName:            "test_root.crt",
-		KeyName:            "test_root.key",
+		CrtPath:            "test_root.crt",
+		KeyPath:            "test_root.key",
 	}
 
 	err := CreateCrt(nil, nil, baseinfo)
@@ -28,11 +27,11 @@ func Test_keypair(t *testing.T) {
 	}
 	crtinfo := baseinfo
 	crtinfo.IsCA = false
-	crtinfo.CrtName = "test_server.crt"
-	crtinfo.KeyName = "test_server.key"
+	crtinfo.CrtPath = "test_server.crt"
+	crtinfo.KeyPath = "test_server.key"
 	crtinfo.Names = []pkix.AttributeTypeAndValue{{Type: asn1.ObjectIdentifier{2, 1, 3}, Value: "MAC_ADDR"}}
 
-	crt, pri, err := Parse(baseinfo.CrtName, baseinfo.KeyName)
+	crt, pri, err := Parse(baseinfo.CrtPath, baseinfo.KeyPath)
 	if err != nil {
 		t.Log("Parse crt error, error info:", err)
 		return
@@ -41,8 +40,8 @@ func Test_keypair(t *testing.T) {
 	if err != nil {
 		t.Log("Create crt error, error info:", err)
 	}
-	os.Remove(baseinfo.CrtName)
-	os.Remove(baseinfo.KeyName)
-	os.Remove(crtinfo.CrtName)
-	os.Remove(crtinfo.KeyName)
+	// os.Remove(baseinfo.CrtPath)
+	// os.Remove(baseinfo.KeyPath)
+	// os.Remove(crtinfo.CrtPath)
+	// os.Remove(crtinfo.KeyPath)
 }
