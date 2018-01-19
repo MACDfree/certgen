@@ -5,5 +5,9 @@ import (
 )
 
 func TestPfxUtil(t *testing.T) {
-	// TODO 补充单元测试
+	err := CreatePfx("test_server.crt", "test_server.key", "test.pfx", "123456")
+
+	if err != nil {
+		t.Fatal("创建pfx报错", err)
+	}
 }
