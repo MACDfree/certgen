@@ -6,6 +6,8 @@ import (
 
 // StartHTTP 启动http服务
 func StartHTTP(addr string) {
+	http.Handle("/", http.FileServer(http.Dir("html")))
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	http.ListenAndServe(addr, nil)
 }
 
