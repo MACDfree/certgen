@@ -3,3 +3,4 @@
 *.jks
 *.pfx
 debug
+.DS_Store
